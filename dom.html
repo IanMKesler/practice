@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<body>
+    <h1>
+      THE TITLE OF YOUR WEBPAGE
+    </h1>
+    <div id="container"></div>
+  </body>
+
+  <script>
+    const container = document.querySelector('#container');
+
+    const content = document.createElement('div');
+    content.classList.add('content');
+    content.textContent = 'This is the glorious text-content!';
+
+    const redParagraph = document.createElement('p');
+    redParagraph.classList.add('redParagraph');
+    redParagraph.style.cssText = 'color: red';
+    redParagraph.textContent = "Hey I'm red!";
+
+    const blueH3 = document.createElement('h3');
+    blueH3.classList.add('blueH3');
+    blueH3.style.cssText = 'color: blue';
+    blueH3.textContent = "I'm a blue h3!";
+
+    const blackPinkDiv = document.createElement('div');
+    blackPinkDiv.classList.add('blackPinkDiv');
+    blackPinkDiv.style.cssText = 'border: 1px solid black; background: pink';
+
+    const bpDiv = document.createElement('div');
+    bpDiv.classList.add('bpDiv');
+    bpDiv.textContent = "I'm in a div";
+
+    const bpP = document.createElement('p');
+    bpP.classList.add('bpP');
+    bpP.textContent="ME TOO!";
+
+    blackPinkDiv.appendChild(bpDiv);
+    blackPinkDiv.appendChild(bpP);
+
+
+
+    container.appendChild(content);
+    container.appendChild(redParagraph);
+    container.appendChild(blueH3);
+    container.appendChild(blackPinkDiv);
+  </script>
