@@ -1,3 +1,4 @@
+#require 'pry'; binding.pry
 module Enumerable 
     def my_each
         return to_enum(:my_each) unless block_given?
@@ -75,19 +76,57 @@ module Enumerable
         end
     end
 
-    def my_map
-        return to_enum(:my_map) unless block_given?
+    def my_map(proc = nil)
+        return to_enum(:my_map) unless block_given? || proc
         output = []
-        self.my_each {|x|
-            output << yield(x)
-        }
-        output
+        if proc
+            self.my_each {|x|
+                output << proc.call(x)
+            }
+            output
+        else
+            self.my_each {|x|
+                output << yield(x)
+            }
+            output
+        end
     end
 
-    def my_inject
-            
-            
-
+    def my_inject(arg1=nil, arg2=nil)
+        args = [arg1, arg2, block_given?]
+        case 
+        when args[0..1].my_all? && !args[2]
+            result = args[0]
+            operation = args[1].to_proc #converts arg[1] into a proc using the .arg[1] method
+            self.my_each {|x|
+                result = operation.call(result,x)
+            }
+            return result
+        when args[0] && !args[1] && !args[2]
+            result = self[0]
+            operation = args[0].to_proc 
+            self.my_each_with_index {|x,i|
+                result = operation.call(result,x) unless i == 0
+            }
+            return result
+        when args[0] && !args[1] && args[2]
+            result = args[0]
+            self.my_each {|x|
+                result = yield(result, x)
+            }
+            return result
+        when args[0..1].my_none? && args[2]
+            result = self[0]
+            self.my_each_with_index {|x,i|
+                result = yield(result,x) unless i == 0
+                puts result
+            }
+            return result
+        end
+    end
 
 end
 
+def multiply_els(array)
+    array.my_inject(:*)
+end
