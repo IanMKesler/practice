@@ -1,4 +1,5 @@
 def caesar_cipher(string,n)
+    return false unless string.instance_of? String
     alphabet = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z']
     letters = string.downcase.split("")
     places = letters.map {|letter| 
@@ -21,5 +22,3 @@ def caesar_cipher(string,n)
     
 end
    
-
-puts caesar_cipher("What a string!", 5)
